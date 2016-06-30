@@ -18,6 +18,7 @@
     projectile.name = @"projectile";
     
     [projectile setUpAnimation];
+    [projectile setUpPhysicsBody];
     return projectile;
 }
 
@@ -30,6 +31,17 @@
     SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:0.1];
     SKAction *repeatAction = [SKAction repeatActionForever:animation];
     [self runAction:repeatAction];
+}
+
+- (void)setUpPhysicsBody {
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.frame.size];
+    //gravity
+    self.physicsBody.affectedByGravity = NO;
+    //collision and contact
+    self.physicsBody.categoryBitMask = CollisionCatergoryProjectile;
+    self.physicsBody.collisionBitMask = 0;
+    self.physicsBody.contactTestBitMask = CollisionCategoryEnemy;
+    
 }
 
 - (void)moveTowardsPosition:(CGPoint)position {

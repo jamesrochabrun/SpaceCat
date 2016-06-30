@@ -12,35 +12,110 @@
 #import "ProjectileNode.h"
 #import "SpaceDogNode.h"
 #import "GroundNode.h"
+#import "Util.h"
+
+
+@interface GameScene ()
+@property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+@property (nonatomic) NSTimeInterval timeSinceEnemyAdded;
+@property (nonatomic) NSTimeInterval totalGameTime;
+@property (nonatomic) NSInteger minSpeed;
+@property (nonatomic) NSTimeInterval addEnemyTimeInterval;
+
+@end
 
 @implementation GameScene
 
 -(void)didMoveToView:(SKView *)view {
+    
+    //initializing the properties of time to 0
+    self.lastUpdateTimeInterval = 0;
+    self.timeSinceEnemyAdded = 0;
+    self.addEnemyTimeInterval = 1.5; //we can chenge this initial value
+    self.totalGameTime = 0;
+    self.minSpeed = SpaceDogMinSpeed; //this comes from the Util.h file
+    
     /* Setup your scene here */
     SKSpriteNode *backGround = [SKSpriteNode spriteNodeWithImageNamed:@"background_1"];
     backGround.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     backGround.size = self.frame.size;
-    
     [self addChild:backGround];
     
-    MachineNode *machine = [MachineNode machineAtPosition: CGPointMake(CGRectGetMidX(self.frame), 12)];
-  
-    [self addChild:machine];
+    //adding the space cat
+    [self addSpaceCat];
     
-    SpaceCatNode *spaceCat = [SpaceCatNode spaceCatAtPosition:CGPointMake(machine.position.x, machine.position.y-2)];
-    [self addChild:spaceCat];
-    
-    //adding the enemy
-    [self addSpaceDog];
-    
-    //phisic world stuf setting the gravity of the scene
+    //phisic world stuf setting the gravity of the scene and the contactdelegate
     self.physicsWorld.gravity = CGVectorMake(0, -9.8);
+    self.physicsWorld.contactDelegate = self;
     
     //adding the ground phisic
     GroundNode *ground = [GroundNode groundWithSize:CGSizeMake(self.frame.size.width, 22)];
     [self addChild:ground];
 }
 
+//dog
+- (void)addSpaceDog {
+    
+    //beacuse we just have two dogs pics
+    NSInteger randomSpaceDog = [Util randomWithMin:0 max:2];
+    
+    SpaceDogNode *spaceDog = [SpaceDogNode spaceDogType:randomSpaceDog];
+    
+    float dy = [Util randomWithMin:SpaceDogMinSpeed max:SpaceDogMaxSpeed];
+    spaceDog.physicsBody.velocity = CGVectorMake(0, dy);
+
+    float y = self.frame.size.height + spaceDog.size.height;
+    float x = [Util randomWithMin:10 + spaceDog.size.width max:self.frame.size.width - spaceDog.size.width- 10];
+    spaceDog.position = CGPointMake(x, y);
+    [self addChild:spaceDog];
+}
+
+- (void)update:(NSTimeInterval)currentTime { //this runs every second or every time the loop game runs
+    
+    if (self.lastUpdateTimeInterval) {
+        self.timeSinceEnemyAdded += currentTime - self.lastUpdateTimeInterval;
+        self.totalGameTime += currentTime - self.lastUpdateTimeInterval;
+    }
+    
+    //1.0 is one second passed since last enemy added
+    if (self.timeSinceEnemyAdded > self.addEnemyTimeInterval) {
+        [self addSpaceDog];
+        self.timeSinceEnemyAdded = 0;
+    }
+    
+    self.lastUpdateTimeInterval = currentTime;
+    
+    if (self.totalGameTime > 480) {
+        //480 / 60 = 8 minutes
+        self.addEnemyTimeInterval = 0.50;
+        self.minSpeed = -160;
+    } else if (self.totalGameTime > 240) {
+        //240 / 60 = 4
+        self.addEnemyTimeInterval = 0.65;
+        self.minSpeed = -150;
+    } else if (self.totalGameTime > 20) {
+        //120 / 60 = 2
+        self.addEnemyTimeInterval = 0.75;
+        self.minSpeed = -125;
+    } else if (self.totalGameTime > 10) {
+        self.addEnemyTimeInterval = 1.00;
+        self.minSpeed = -100;
+    }
+ 
+}
+
+//cat
+- (void)addSpaceCat {
+    MachineNode *machine = [MachineNode machineAtPosition: CGPointMake(CGRectGetMidX(self.frame), 12)];
+    
+    [self addChild:machine];
+    
+    SpaceCatNode *spaceCat = [SpaceCatNode spaceCatAtPosition:CGPointMake(machine.position.x, machine.position.y-2)];
+    [self addChild:spaceCat];
+}
+
+
+//projectile
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     for (UITouch *touch in touches) {
@@ -69,18 +144,74 @@
     
 }
 
-- (void)addSpaceDog {
+#pragma contacteDelegatemethod
+
+- (void)didBeginContact:(SKPhysicsContact *)contact {
     
-    SpaceDogNode *spaceDogA = [SpaceDogNode spaceDogType:SpaceDogTypeA];
-    spaceDogA.position = CGPointMake(100, 300);
-    [self addChild:spaceDogA];
+    //preventing confussion arround bodyA and B
     
-    SpaceDogNode *spaceDogB = [SpaceDogNode spaceDogType:SpacedogTypeB];
-    spaceDogB.position = CGPointMake(200, 300);
-    [self addChild:spaceDogB];
+    SKPhysicsBody *firstBody, *secondBody;
     
+    //remeber enemy is less value than the projectile 0000 < 0010
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
     
+    if (firstBody.categoryBitMask == CollisionCategoryEnemy &&
+        secondBody.categoryBitMask == CollisionCatergoryProjectile ) {
+        
+        SpaceDogNode *spaceDog  = (SpaceDogNode*)firstBody.node;
+        ProjectileNode *projectile = (ProjectileNode*)secondBody.node;
+        
+        [spaceDog removeFromParent];
+        [projectile removeFromParent];
+        NSLog(@"bam");
+        
+    } else if (firstBody.categoryBitMask == CollisionCategoryEnemy &&
+               secondBody.categoryBitMask == CollisionCategoryGround) {
+        
+        SpaceDogNode *spaceDog = (SpaceDogNode*)firstBody.node;
+        [spaceDog removeFromParent];
+        NSLog(@"hit the floor ");
+    }
+    
+    [self createDebrisAtPosition:contact.contactPoint];
 }
+
+- (void)createDebrisAtPosition:(CGPoint)position {
+    
+    NSInteger numberOfPieces = [Util randomWithMin:5 max:20];
+    
+    for (int i = 0; i < numberOfPieces; i++) {
+        NSInteger randomPiece = [Util randomWithMin:1 max:4];
+        NSString *imageName = [NSString stringWithFormat:@"debri_%ld", (long)randomPiece];
+        
+        SKSpriteNode *debris = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+        debris.position = position;
+        [self addChild:debris];
+        
+        //phisics body
+        debris.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:debris.frame.size];
+        debris.physicsBody.categoryBitMask = CollisionCategoryDebris;
+        debris.physicsBody.contactTestBitMask = 0;
+        debris.physicsBody.collisionBitMask = CollisionCategoryGround | CollisionCategoryDebris;
+        debris.name = @"Debris";
+        
+        debris.physicsBody.velocity = CGVectorMake([Util randomWithMin:-150 max:150],
+                                                   [Util randomWithMin:150 max:350]);
+        
+        [debris runAction:[SKAction waitForDuration:2.0] completion:^{
+            [debris removeFromParent];
+        }];
+        
+    }
+}
+
+
 
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "SpaceDogNode.h"
+#import "Util.h"
 
 @implementation SpaceDogNode
 
@@ -35,12 +36,46 @@
                      [SKTexture textureWithImageNamed:@"spacedog_B_4"]];
     }
     
+    //randomizing the size of the dog
+    float scale = [Util randomWithMin:85 max:100] / 100.0f;
+    spaceDog.xScale = scale;
+    spaceDog.yScale = scale;
+    
+    
     SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:0.1];
     
     //dont forget that runAction its an instance method and should be called through the instance
     [spaceDog runAction:[SKAction repeatActionForever:animation]];
     
+    [spaceDog setUpPhysicsBody];
+    
     return spaceDog;
 }
+
+- (void)setUpPhysicsBody {
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.frame.size];
+    
+    //gravity and velocity
+    self.physicsBody.affectedByGravity = NO;
+    
+    //contact and collision
+    self.physicsBody.categoryBitMask = CollisionCategoryEnemy;
+    self.physicsBody.collisionBitMask = 0;
+    self.physicsBody.contactTestBitMask = CollisionCatergoryProjectile | CollisionCategoryGround; //0010 | 1000 = 1010 bitwise operator
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end
