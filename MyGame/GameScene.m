@@ -18,6 +18,16 @@
     
     [self addChild:backGround];
     
+    SKSpriteNode *machine = [SKSpriteNode spriteNodeWithImageNamed:@"machine_1"];
+    machine.position = CGPointMake(CGRectGetMidX(self.frame), 12);
+    machine.anchorPoint = CGPointMake(0.5, 0);
+    [self addChild:machine];
+    
+}
+
+- (void)update:(NSTimeInterval)currentTime {
+    
+    NSLog(@"%f", fmod(currentTime, 60));
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

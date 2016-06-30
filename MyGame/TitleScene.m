@@ -24,6 +24,7 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
+    //this generates the transition from one scene to another
     GameScene *gameScene = [GameScene  sceneWithSize:self.frame.size];
     SKTransition *transition = [SKTransition fadeWithDuration:1.0];
     [self.view presentScene:gameScene transition:transition];
