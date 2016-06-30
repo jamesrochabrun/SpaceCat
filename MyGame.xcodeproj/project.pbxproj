@@ -17,6 +17,9 @@
 		7B955ABA1D25BEA2009EA656 /* StartScreen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AB71D25BEA2009EA656 /* StartScreen.mp3 */; };
 		7B955ABC1D25BEB7009EA656 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B955ABB1D25BEB7009EA656 /* AVFoundation.framework */; };
 		7B955ABE1D25BECD009EA656 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B955ABD1D25BECD009EA656 /* SpriteKit.framework */; };
+		7B955AC11D25C886009EA656 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7B955ABF1D25C886009EA656 /* Explosion.sks */; };
+		7B955AC21D25C886009EA656 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AC01D25C886009EA656 /* spark.png */; };
+		7B955AC61D25CCBF009EA656 /* HudNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B955AC51D25CCBF009EA656 /* HudNode.m */; };
 		7B95E7D21D248B100022213E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E7D11D248B100022213E /* main.m */; };
 		7B95E7D51D248B100022213E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E7D41D248B100022213E /* AppDelegate.m */; };
 		7B95E7DA1D248B100022213E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7B95E7D91D248B100022213E /* GameScene.sks */; };
@@ -57,6 +60,10 @@
 		7B955AB71D25BEA2009EA656 /* StartScreen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = StartScreen.mp3; sourceTree = "<group>"; };
 		7B955ABB1D25BEB7009EA656 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7B955ABD1D25BECD009EA656 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		7B955ABF1D25C886009EA656 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		7B955AC01D25C886009EA656 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		7B955AC41D25CCBF009EA656 /* HudNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudNode.h; sourceTree = "<group>"; };
+		7B955AC51D25CCBF009EA656 /* HudNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudNode.m; sourceTree = "<group>"; };
 		7B95E7CD1D248B100022213E /* MyGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B95E7D11D248B100022213E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7B95E7D31D248B100022213E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -122,6 +129,15 @@
 			name = sounds;
 			sourceTree = "<group>";
 		};
+		7B955AC31D25C899009EA656 /* particles */ = {
+			isa = PBXGroup;
+			children = (
+				7B955ABF1D25C886009EA656 /* Explosion.sks */,
+				7B955AC01D25C886009EA656 /* spark.png */,
+			);
+			name = particles;
+			sourceTree = "<group>";
+		};
 		7B95E7C41D248B100022213E = {
 			isa = PBXGroup;
 			children = (
@@ -149,8 +165,10 @@
 				7B955AAC1D25BB7D009EA656 /* sounds */,
 				7B95E8391D24B8230022213E /* nodes */,
 				7B95E8331D249D010022213E /* scenes */,
-				7B95E7DE1D248B100022213E /* Main.storyboard */,
+				7B955AC31D25C899009EA656 /* particles */,
+				7B95E8341D24AB900022213E /* Sprites.atlas */,
 				7B95E7E11D248B100022213E /* Assets.xcassets */,
+				7B95E7DE1D248B100022213E /* Main.storyboard */,
 				7B95E7E31D248B100022213E /* LaunchScreen.storyboard */,
 				7B95E7E61D248B100022213E /* Info.plist */,
 				7B95E7D01D248B100022213E /* Supporting Files */,
@@ -188,7 +206,6 @@
 				7B95E82E1D249A320022213E /* TitleScene.m */,
 				7B95E8301D249CF80022213E /* GameScene.h */,
 				7B95E8311D249CF80022213E /* GameScene.m */,
-				7B95E8341D24AB900022213E /* Sprites.atlas */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -196,6 +213,8 @@
 		7B95E8391D24B8230022213E /* nodes */ = {
 			isa = PBXGroup;
 			children = (
+				7B955AC41D25CCBF009EA656 /* HudNode.h */,
+				7B955AC51D25CCBF009EA656 /* HudNode.m */,
 				7B6E6FAF1D24E10800102215 /* GroundNode.h */,
 				7B6E6FB01D24E10800102215 /* GroundNode.m */,
 				7B95E8431D24D9660022213E /* SpaceDogNode.h */,
@@ -293,8 +312,10 @@
 				7B955AB31D25BBB7009EA656 /* Laser.caf in Resources */,
 				7B95E7DA1D248B100022213E /* GameScene.sks in Resources */,
 				7B95E7E51D248B100022213E /* LaunchScreen.storyboard in Resources */,
+				7B955AC21D25C886009EA656 /* spark.png in Resources */,
 				7B95E7E21D248B100022213E /* Assets.xcassets in Resources */,
 				7B955AB81D25BEA2009EA656 /* GameOver.mp3 in Resources */,
+				7B955AC11D25C886009EA656 /* Explosion.sks in Resources */,
 				7B955AB11D25BBB7009EA656 /* Damage.caf in Resources */,
 				7B95E7E01D248B100022213E /* Main.storyboard in Resources */,
 				7B95E8351D24AB900022213E /* Sprites.atlas in Resources */,
@@ -330,6 +351,7 @@
 				7B6E6FB11D24E10800102215 /* GroundNode.m in Sources */,
 				7B95E8381D24B8100022213E /* MachineNode.m in Sources */,
 				7B95E8421D24D6A40022213E /* Util.m in Sources */,
+				7B955AC61D25CCBF009EA656 /* HudNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

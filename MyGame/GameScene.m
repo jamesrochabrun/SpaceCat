@@ -14,6 +14,7 @@
 #import "GroundNode.h"
 #import "Util.h"
 #import <AVFoundation/AVFoundation.h>
+#import "HudNode.h"
 
 
 @interface GameScene ()
@@ -61,6 +62,15 @@
     //sound effects
     [self setUpSounds];
     
+    //adding the hud
+    [self setUpHudNode];
+    
+}
+
+- (void)setUpHudNode {
+    
+    HudNode *hud = [HudNode hudAtPosition:CGPointMake(0, self.frame.size.height -20) inFrame:self.frame];
+    [self addChild:hud];
 }
 
 - (void)setUpSounds {
@@ -194,6 +204,9 @@
         SpaceDogNode *spaceDog  = (SpaceDogNode*)firstBody.node;
         ProjectileNode *projectile = (ProjectileNode*)secondBody.node;
         
+        //score
+        [self addPoints:PointsPerHeat];
+        
         //runing sound for explosion when projectile hits enemy
         [self runAction:self.explodeSFX];
         
@@ -209,9 +222,26 @@
         SpaceDogNode *spaceDog = (SpaceDogNode*)firstBody.node;
         [spaceDog removeFromParent];
         NSLog(@"hit the floor ");
+        
+        //user looses a life
+        [self enemyTouchedTheFloor];
     }
     
     [self createDebrisAtPosition:contact.contactPoint];
+}
+
+//adding points method
+- (void)addPoints:(NSInteger)points {
+    
+    HudNode *hud = (HudNode*)[self childNodeWithName:@"HUD"];
+    [hud addPoints:points];
+}
+
+//loosing lifes
+- (void)enemyTouchedTheFloor {
+    HudNode *hud = (HudNode*)[self childNodeWithName:@"HUD"];
+    [hud loseLife];
+
 }
 
 - (void)createDebrisAtPosition:(CGPoint)position {
@@ -241,6 +271,17 @@
         }];
         
     }
+    
+    //particles
+    NSString *explosionPath = [[NSBundle mainBundle] pathForResource:@"Explosion" ofType:@"sks"];
+    SKEmitterNode *explosion = [NSKeyedUnarchiver unarchiveObjectWithFile:explosionPath];
+    
+    explosion.position = position;
+    [self addChild:explosion];
+    
+    [explosion runAction:[SKAction waitForDuration:2.0] completion:^{
+        [explosion removeFromParent];
+    }];
 }
 
 

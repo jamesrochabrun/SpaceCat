@@ -11,6 +11,8 @@
 static const int ProjectileSpeed = 400;
 static const int SpaceDogMinSpeed = -100;
 static const int SpaceDogMaxSpeed = -50;
+static const int Maxlives = 4;
+static const int PointsPerHeat = 100;
 
 //we use this specifically for bitmasks like the collision and contact mask
 //<< bitwise shift operation move one bit to the left, creating 4 diferent bits
