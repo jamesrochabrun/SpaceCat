@@ -12,6 +12,8 @@
 @implementation TitleScene
 
 
+//this is the splach scene
+
 -(void)didMoveToView:(SKView *)view {
     /* Setup your scene here */
     SKSpriteNode *backGround = [SKSpriteNode spriteNodeWithImageNamed:@"splash_1"];

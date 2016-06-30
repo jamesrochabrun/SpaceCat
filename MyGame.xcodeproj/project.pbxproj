@@ -18,6 +18,11 @@
 		7B95E82F1D249A320022213E /* TitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E82E1D249A320022213E /* TitleScene.m */; };
 		7B95E8321D249CF80022213E /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E8311D249CF80022213E /* GameScene.m */; };
 		7B95E8351D24AB900022213E /* Sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 7B95E8341D24AB900022213E /* Sprites.atlas */; };
+		7B95E8381D24B8100022213E /* MachineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E8371D24B8100022213E /* MachineNode.m */; };
+		7B95E83C1D24BBE20022213E /* SpaceCatNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E83B1D24BBE20022213E /* SpaceCatNode.m */; };
+		7B95E83F1D24C4430022213E /* ProjectileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E83E1D24C4430022213E /* ProjectileNode.m */; };
+		7B95E8421D24D6A40022213E /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E8411D24D6A40022213E /* Util.m */; };
+		7B95E8451D24D9660022213E /* SpaceDogNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E8441D24D9660022213E /* SpaceDogNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +55,16 @@
 		7B95E8301D249CF80022213E /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		7B95E8311D249CF80022213E /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		7B95E8341D24AB900022213E /* Sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Sprites.atlas; sourceTree = "<group>"; };
+		7B95E8361D24B8100022213E /* MachineNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachineNode.h; sourceTree = "<group>"; };
+		7B95E8371D24B8100022213E /* MachineNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MachineNode.m; sourceTree = "<group>"; };
+		7B95E83A1D24BBE20022213E /* SpaceCatNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceCatNode.h; sourceTree = "<group>"; };
+		7B95E83B1D24BBE20022213E /* SpaceCatNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpaceCatNode.m; sourceTree = "<group>"; };
+		7B95E83D1D24C4430022213E /* ProjectileNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectileNode.h; sourceTree = "<group>"; };
+		7B95E83E1D24C4430022213E /* ProjectileNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectileNode.m; sourceTree = "<group>"; };
+		7B95E8401D24D6A40022213E /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		7B95E8411D24D6A40022213E /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
+		7B95E8431D24D9660022213E /* SpaceDogNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceDogNode.h; sourceTree = "<group>"; };
+		7B95E8441D24D9660022213E /* SpaceDogNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpaceDogNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				7B95E7D91D248B100022213E /* GameScene.sks */,
+				7B95E8391D24B8230022213E /* nodes */,
 				7B95E8331D249D010022213E /* scenes */,
 				7B95E7DE1D248B100022213E /* Main.storyboard */,
 				7B95E7E11D248B100022213E /* Assets.xcassets */,
@@ -105,6 +121,8 @@
 		7B95E7D01D248B100022213E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7B95E8401D24D6A40022213E /* Util.h */,
+				7B95E8411D24D6A40022213E /* Util.m */,
 				7B95E7D31D248B100022213E /* AppDelegate.h */,
 				7B95E7D41D248B100022213E /* AppDelegate.m */,
 				7B95E7DB1D248B100022213E /* GameViewController.h */,
@@ -133,6 +151,21 @@
 				7B95E8341D24AB900022213E /* Sprites.atlas */,
 			);
 			name = scenes;
+			sourceTree = "<group>";
+		};
+		7B95E8391D24B8230022213E /* nodes */ = {
+			isa = PBXGroup;
+			children = (
+				7B95E8431D24D9660022213E /* SpaceDogNode.h */,
+				7B95E8441D24D9660022213E /* SpaceDogNode.m */,
+				7B95E83D1D24C4430022213E /* ProjectileNode.h */,
+				7B95E83E1D24C4430022213E /* ProjectileNode.m */,
+				7B95E83A1D24BBE20022213E /* SpaceCatNode.h */,
+				7B95E83B1D24BBE20022213E /* SpaceCatNode.m */,
+				7B95E8361D24B8100022213E /* MachineNode.h */,
+				7B95E8371D24B8100022213E /* MachineNode.m */,
+			);
+			name = nodes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,9 +272,14 @@
 			files = (
 				7B95E82F1D249A320022213E /* TitleScene.m in Sources */,
 				7B95E7DD1D248B100022213E /* GameViewController.m in Sources */,
+				7B95E83F1D24C4430022213E /* ProjectileNode.m in Sources */,
 				7B95E8321D249CF80022213E /* GameScene.m in Sources */,
 				7B95E7D51D248B100022213E /* AppDelegate.m in Sources */,
+				7B95E8451D24D9660022213E /* SpaceDogNode.m in Sources */,
 				7B95E7D21D248B100022213E /* main.m in Sources */,
+				7B95E83C1D24BBE20022213E /* SpaceCatNode.m in Sources */,
+				7B95E8381D24B8100022213E /* MachineNode.m in Sources */,
+				7B95E8421D24D6A40022213E /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
