@@ -1,5 +1,5 @@
 //
-//  GameScene.h
+//  TitleScene.h
 //  MyGame
 //
 //  Created by James Rochabrun on 29-06-16.
@@ -8,6 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface GameScene : SKScene
+@interface TitleScene : SKScene
 
 @end
