@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		7B6E6FB11D24E10800102215 /* GroundNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6E6FB01D24E10800102215 /* GroundNode.m */; };
+		7B955AB11D25BBB7009EA656 /* Damage.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AAD1D25BBB7009EA656 /* Damage.caf */; };
+		7B955AB21D25BBB7009EA656 /* Explode.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AAE1D25BBB7009EA656 /* Explode.caf */; };
+		7B955AB31D25BBB7009EA656 /* Laser.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AAF1D25BBB7009EA656 /* Laser.caf */; };
+		7B955AB41D25BBB7009EA656 /* PressStart.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AB01D25BBB7009EA656 /* PressStart.caf */; };
+		7B955AB81D25BEA2009EA656 /* GameOver.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AB51D25BEA2009EA656 /* GameOver.mp3 */; };
+		7B955AB91D25BEA2009EA656 /* Gameplay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AB61D25BEA2009EA656 /* Gameplay.mp3 */; };
+		7B955ABA1D25BEA2009EA656 /* StartScreen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B955AB71D25BEA2009EA656 /* StartScreen.mp3 */; };
+		7B955ABC1D25BEB7009EA656 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B955ABB1D25BEB7009EA656 /* AVFoundation.framework */; };
+		7B955ABE1D25BECD009EA656 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B955ABD1D25BECD009EA656 /* SpriteKit.framework */; };
 		7B95E7D21D248B100022213E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E7D11D248B100022213E /* main.m */; };
 		7B95E7D51D248B100022213E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B95E7D41D248B100022213E /* AppDelegate.m */; };
 		7B95E7DA1D248B100022213E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7B95E7D91D248B100022213E /* GameScene.sks */; };
@@ -39,6 +48,15 @@
 /* Begin PBXFileReference section */
 		7B6E6FAF1D24E10800102215 /* GroundNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroundNode.h; sourceTree = "<group>"; };
 		7B6E6FB01D24E10800102215 /* GroundNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroundNode.m; sourceTree = "<group>"; };
+		7B955AAD1D25BBB7009EA656 /* Damage.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Damage.caf; sourceTree = "<group>"; };
+		7B955AAE1D25BBB7009EA656 /* Explode.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Explode.caf; sourceTree = "<group>"; };
+		7B955AAF1D25BBB7009EA656 /* Laser.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Laser.caf; sourceTree = "<group>"; };
+		7B955AB01D25BBB7009EA656 /* PressStart.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PressStart.caf; sourceTree = "<group>"; };
+		7B955AB51D25BEA2009EA656 /* GameOver.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GameOver.mp3; sourceTree = "<group>"; };
+		7B955AB61D25BEA2009EA656 /* Gameplay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gameplay.mp3; sourceTree = "<group>"; };
+		7B955AB71D25BEA2009EA656 /* StartScreen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = StartScreen.mp3; sourceTree = "<group>"; };
+		7B955ABB1D25BEB7009EA656 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7B955ABD1D25BECD009EA656 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		7B95E7CD1D248B100022213E /* MyGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B95E7D11D248B100022213E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7B95E7D31D248B100022213E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -75,6 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B955ABE1D25BECD009EA656 /* SpriteKit.framework in Frameworks */,
+				7B955ABC1D25BEB7009EA656 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,9 +108,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B955AAC1D25BB7D009EA656 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				7B955AB51D25BEA2009EA656 /* GameOver.mp3 */,
+				7B955AB61D25BEA2009EA656 /* Gameplay.mp3 */,
+				7B955AB71D25BEA2009EA656 /* StartScreen.mp3 */,
+				7B955AAD1D25BBB7009EA656 /* Damage.caf */,
+				7B955AAE1D25BBB7009EA656 /* Explode.caf */,
+				7B955AAF1D25BBB7009EA656 /* Laser.caf */,
+				7B955AB01D25BBB7009EA656 /* PressStart.caf */,
+			);
+			name = sounds;
+			sourceTree = "<group>";
+		};
 		7B95E7C41D248B100022213E = {
 			isa = PBXGroup;
 			children = (
+				7B955ABD1D25BECD009EA656 /* SpriteKit.framework */,
+				7B955ABB1D25BEB7009EA656 /* AVFoundation.framework */,
 				7B95E7CF1D248B100022213E /* MyGame */,
 				7B95E7EE1D248B100022213E /* MyGameTests */,
 				7B95E7CE1D248B100022213E /* Products */,
@@ -110,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				7B95E7D91D248B100022213E /* GameScene.sks */,
+				7B955AAC1D25BB7D009EA656 /* sounds */,
 				7B95E8391D24B8230022213E /* nodes */,
 				7B95E8331D249D010022213E /* scenes */,
 				7B95E7DE1D248B100022213E /* Main.storyboard */,
@@ -253,11 +290,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B955AB31D25BBB7009EA656 /* Laser.caf in Resources */,
 				7B95E7DA1D248B100022213E /* GameScene.sks in Resources */,
 				7B95E7E51D248B100022213E /* LaunchScreen.storyboard in Resources */,
 				7B95E7E21D248B100022213E /* Assets.xcassets in Resources */,
+				7B955AB81D25BEA2009EA656 /* GameOver.mp3 in Resources */,
+				7B955AB11D25BBB7009EA656 /* Damage.caf in Resources */,
 				7B95E7E01D248B100022213E /* Main.storyboard in Resources */,
 				7B95E8351D24AB900022213E /* Sprites.atlas in Resources */,
+				7B955AB41D25BBB7009EA656 /* PressStart.caf in Resources */,
+				7B955AB21D25BBB7009EA656 /* Explode.caf in Resources */,
+				7B955AB91D25BEA2009EA656 /* Gameplay.mp3 in Resources */,
+				7B955ABA1D25BEA2009EA656 /* StartScreen.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 #import "SpaceDogNode.h"
 #import "GroundNode.h"
 #import "Util.h"
+#import <AVFoundation/AVFoundation.h>
 
 
 @interface GameScene ()
@@ -22,6 +23,11 @@
 @property (nonatomic) NSInteger minSpeed;
 @property (nonatomic) NSTimeInterval addEnemyTimeInterval;
 
+//sound properties
+@property (nonatomic) SKAction *damageSFX;
+@property (nonatomic) SKAction *explodeSFX;
+@property (nonatomic) SKAction *laserSFX;
+@property (nonatomic) AVAudioPlayer *backGroundMusic;
 @end
 
 @implementation GameScene
@@ -51,6 +57,24 @@
     //adding the ground phisic
     GroundNode *ground = [GroundNode groundWithSize:CGSizeMake(self.frame.size.width, 22)];
     [self addChild:ground];
+    
+    //sound effects
+    [self setUpSounds];
+    
+}
+
+- (void)setUpSounds {
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"Gameplay" withExtension:@"mp3"];
+    self.backGroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    self.backGroundMusic.numberOfLoops = -1; //repeat infineteley
+    [self.backGroundMusic prepareToPlay];
+    [self.backGroundMusic play];
+    
+    self.damageSFX = [SKAction playSoundFileNamed:@"Damage.caf" waitForCompletion:NO];
+    self.explodeSFX = [SKAction playSoundFileNamed:@"Explode.caf" waitForCompletion:NO];
+    self.laserSFX = [SKAction playSoundFileNamed:@"Laser.caf" waitForCompletion:NO];
+    
 }
 
 //dog
@@ -142,6 +166,9 @@
     //lastly
     [projectile moveTowardsPosition:position];
     
+    //run the sound for laser
+    [self runAction:self.laserSFX];
+    
 }
 
 #pragma contacteDelegatemethod
@@ -167,12 +194,17 @@
         SpaceDogNode *spaceDog  = (SpaceDogNode*)firstBody.node;
         ProjectileNode *projectile = (ProjectileNode*)secondBody.node;
         
+        //runing sound for explosion when projectile hits enemy
+        [self runAction:self.explodeSFX];
+        
         [spaceDog removeFromParent];
         [projectile removeFromParent];
         NSLog(@"bam");
         
     } else if (firstBody.categoryBitMask == CollisionCategoryEnemy &&
                secondBody.categoryBitMask == CollisionCategoryGround) {
+        //runing sound for damage sound when the dog hits the floor
+        [self runAction:self.damageSFX];
         
         SpaceDogNode *spaceDog = (SpaceDogNode*)firstBody.node;
         [spaceDog removeFromParent];
