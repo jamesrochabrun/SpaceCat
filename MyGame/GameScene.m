@@ -11,6 +11,7 @@
 #import "SpaceCatNode.h"
 #import "ProjectileNode.h"
 #import "SpaceDogNode.h"
+#import "GroundNode.h"
 
 @implementation GameScene
 
@@ -31,6 +32,13 @@
     
     //adding the enemy
     [self addSpaceDog];
+    
+    //phisic world stuf setting the gravity of the scene
+    self.physicsWorld.gravity = CGVectorMake(0, -9.8);
+    
+    //adding the ground phisic
+    GroundNode *ground = [GroundNode groundWithSize:CGSizeMake(self.frame.size.width, 22)];
+    [self addChild:ground];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
