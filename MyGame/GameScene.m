@@ -15,6 +15,7 @@
 #import "Util.h"
 #import <AVFoundation/AVFoundation.h>
 #import "HudNode.h"
+#import "GameOverNode.h"
 
 
 @interface GameScene ()
@@ -23,12 +24,17 @@
 @property (nonatomic) NSTimeInterval totalGameTime;
 @property (nonatomic) NSInteger minSpeed;
 @property (nonatomic) NSTimeInterval addEnemyTimeInterval;
+@property (nonatomic) BOOL gameOver;
+@property (nonatomic) BOOL playAgain;
+@property (nonatomic) BOOL gameOverBeenDisplayed;
 
 //sound properties
 @property (nonatomic) SKAction *damageSFX;
 @property (nonatomic) SKAction *explodeSFX;
 @property (nonatomic) SKAction *laserSFX;
 @property (nonatomic) AVAudioPlayer *backGroundMusic;
+@property (nonatomic) AVAudioPlayer *gameOverMusic;
+
 @end
 
 @implementation GameScene
@@ -41,6 +47,9 @@
     self.addEnemyTimeInterval = 1.5; //we can chenge this initial value
     self.totalGameTime = 0;
     self.minSpeed = SpaceDogMinSpeed; //this comes from the Util.h file
+    self.gameOver = NO;
+    self.playAgain = NO;
+    self.gameOverBeenDisplayed = NO;
     
     /* Setup your scene here */
     SKSpriteNode *backGround = [SKSpriteNode spriteNodeWithImageNamed:@"background_1"];
@@ -75,12 +84,20 @@
 
 - (void)setUpSounds {
     
+    //background music
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"Gameplay" withExtension:@"mp3"];
     self.backGroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     self.backGroundMusic.numberOfLoops = -1; //repeat infineteley
     [self.backGroundMusic prepareToPlay];
     [self.backGroundMusic play];
     
+    //gameover music
+    NSURL *gameoverUrl = [[NSBundle mainBundle] URLForResource:@"GameOver" withExtension:@"mp3"];
+    self.gameOverMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:gameoverUrl error:nil];
+    self.gameOverMusic.numberOfLoops =  1;
+    [self.gameOverMusic prepareToPlay];
+    
+    //efects sounds
     self.damageSFX = [SKAction playSoundFileNamed:@"Damage.caf" waitForCompletion:NO];
     self.explodeSFX = [SKAction playSoundFileNamed:@"Explode.caf" waitForCompletion:NO];
     self.laserSFX = [SKAction playSoundFileNamed:@"Laser.caf" waitForCompletion:NO];
@@ -112,31 +129,52 @@
     }
     
     //1.0 is one second passed since last enemy added
-    if (self.timeSinceEnemyAdded > self.addEnemyTimeInterval) {
+    //add spacedog if game its not over
+    if (self.timeSinceEnemyAdded > self.addEnemyTimeInterval && !self.gameOver) {
         [self addSpaceDog];
         self.timeSinceEnemyAdded = 0;
     }
     
     self.lastUpdateTimeInterval = currentTime;
     
-    if (self.totalGameTime > 480) {
-        //480 / 60 = 8 minutes
-        self.addEnemyTimeInterval = 0.50;
-        self.minSpeed = -160;
-    } else if (self.totalGameTime > 240) {
-        //240 / 60 = 4
-        self.addEnemyTimeInterval = 0.65;
-        self.minSpeed = -150;
+    if (self.totalGameTime > 90) {
+        self.addEnemyTimeInterval = 0.30;
+        self.minSpeed = -300;
+    } else if (self.totalGameTime > 70) {
+        self.addEnemyTimeInterval = 0.40;
+        self.minSpeed = -250;
+    } else if (self.totalGameTime > 50) {
+        self.addEnemyTimeInterval = 0.60;
+        self.minSpeed = -200;
     } else if (self.totalGameTime > 20) {
-        //120 / 60 = 2
-        self.addEnemyTimeInterval = 0.75;
-        self.minSpeed = -125;
+        self.addEnemyTimeInterval = 0.80;
+        self.minSpeed = -150;
     } else if (self.totalGameTime > 10) {
-        self.addEnemyTimeInterval = 1.00;
+        self.addEnemyTimeInterval = 1.0;
         self.minSpeed = -100;
     }
  
+    //si el juego termino y el gameover label no se ha mostrado
+    if (self.gameOver  && !self.gameOverBeenDisplayed) {
+        [self performGameOver];
+    }
 }
+
+//game over
+- (void)performGameOver {
+    //displaying the sklabel in the centerx and center y of the screen
+    GameOverNode *gameOverNode = [GameOverNode gameOverAtPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
+    [self addChild:gameOverNode];
+    //adding the option to retsar the game
+    self.playAgain = YES;
+    self.gameOverBeenDisplayed = YES;
+    [gameOverNode performAnimation];
+    
+    //changing the music for gameover
+    [self.backGroundMusic stop];
+    [self.gameOverMusic play];
+}
+
 
 //cat
 - (void)addSpaceCat {
@@ -149,14 +187,25 @@
 }
 
 
-//projectile
+//projectile, user touches screen
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    for (UITouch *touch in touches) {
-        CGPoint position = [touch locationInNode:self];
-        [self shootProjectileTowardsPosition:position];
+    if (!self.gameOver) {
+        for (UITouch *touch in touches) {
+            CGPoint position = [touch locationInNode:self];
+            [self shootProjectileTowardsPosition:position];
+        }
+    } else if (self.playAgain) {
+        
+        //preventing to keep any scene on memory
+        for (SKNode *node in [self children]) {
+            [node removeFromParent];
+        }
+        
+        //creating a new scene to play again
+        GameScene *gameScene = [GameScene sceneWithSize:self.view.bounds.size];
+        [self.view presentScene:gameScene];
     }
-    
 }
 
 - (void)shootProjectileTowardsPosition:(CGPoint)position {
@@ -210,6 +259,7 @@
         //runing sound for explosion when projectile hits enemy
         [self runAction:self.explodeSFX];
         
+        //removing nodes from the scene
         [spaceDog removeFromParent];
         [projectile removeFromParent];
         NSLog(@"bam");
@@ -240,7 +290,9 @@
 //loosing lifes
 - (void)enemyTouchedTheFloor {
     HudNode *hud = (HudNode*)[self childNodeWithName:@"HUD"];
-    [hud loseLife];
+    
+    //checking for live lefts until live become 0
+    self.gameOver = [hud loseLife];
 
 }
 

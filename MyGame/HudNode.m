@@ -74,6 +74,7 @@
         self.lives--;
     }
     
+    //when the amount of lives are 0 this returns true
     return self.lives == 0;
     
 }
